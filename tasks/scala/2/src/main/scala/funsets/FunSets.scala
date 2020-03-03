@@ -33,7 +33,7 @@ object FunSets {
    * Returns the intersection of the two given sets,
    * the set of all elements that are both in `s` and `t`.
    */
-    def intersect(s: Set, t: Set): Set = { x => x == elem }
+    def intersect(s: Set, t: Set): Set = { x => s(x) && t(x) }
   
   /**
    * Returns the difference of the two given sets,
@@ -57,11 +57,11 @@ object FunSets {
    */
     def forall(s: Set, p: Int => Boolean): Boolean = {
     def iter(a: Int): Boolean = {
-     if (contains(s, a) && !contains(filtered, a)) false
-      else if (a < -1000) true
-      else iter(a - 1)
+    if (a > bound) true
+      else if (s(a) && !p(a)) false
+      else iter(a + 1)
     }
-    iter(bound)
+    iter(-bound)
   }
   
   /**
